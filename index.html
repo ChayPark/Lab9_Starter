@@ -5,6 +5,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "20bdabef6e2c423dbe62d50417199c5f"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+    TrackJS.track('Testing TrackJS!');
+  </script>               
   <title>Lab 9</title>
 
   <style>
@@ -88,21 +98,108 @@
   </main>
 
   <script>
-    let form = document.querySelector('form');
-    form.addEventListener('submit', e => {
+    try {
+      let form = document.querySelector('form');
+      form.addEventListener('submit', e => {
       e.preventDefault();
       let output = document.querySelector('output');
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
       output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
-    });
-
-    let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
-
+      });
+    } catch(err) {
+      console.error('error found in form block');
+    } finally {
+      let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
+      let log = errorBtns[0];
+      log.addEventListener('click', l => {
+        console.log('Console Log Demo');
+      });
+      let error = errorBtns[1];
+      error.addEventListener('click', err => {
+        console.error('Console Error Demo');
+      });
+      let cnt = errorBtns[2];
+      cnt.addEventListener('click', cn => {
+        console.count();
+      })
+      let warn = errorBtns[3];
+      warn.addEventListener('click', warning => {
+        console.warn('Console Warn Button');
+      });
+      let assert = errorBtns[4];
+      assert.addEventListener('click', ass => {
+        const x = 2;
+        const y = 3;
+        const reason = "Number does not equal 2";
+        console.assert(x ==y, {x,y,reason});
+      });
+      let clear = errorBtns[5];
+      clear.addEventListener('click', cl => {
+        console.clear();
+      });
+      let dir = errorBtns[6];
+      dir.addEventListener('click', d => {
+        console.dir(dir);
+      });
+      let dirxml = errorBtns[7];
+      dirxml.addEventListener('click', dx => {
+        console.dirxml(dirxml);
+      });
+      let strt = errorBtns[8];
+      strt.addEventListener('click', st => {
+        console.group('Console Group Start');
+      });
+      let end = errorBtns[9];
+      end.addEventListener('click', en => {
+        console.groupEnd('Console Group End');      
+      });
+      let tbl = errorBtns[10];
+      tbl.addEventListener('click', tb => {
+        console.table([
+          { name: 'Software Engineering', num: 110 },
+          { name: 'Programming Languages', num: 130 },
+          { name: 'Advanced Software Engineering', num: 112 }
+        ]);
+      });
+      let time = errorBtns[11];
+      time.addEventListener('click', tm => {
+        console.time('Timer Button');
+      });
+      let tmend = errorBtns[12];
+      tmend.addEventListener('click', ten => {
+        console.timeEnd('Timer Button');
+      });
+      let trc = errorBtns[13];
+      trc.addEventListener('click', trace => {
+        const deep = () => { deeper(); };
+        const deeper = () => {deepest(); };
+        const deepest = () => {console.trace()};
+        deep();
+        const handleBtnClick = function() {};
+      });
+      let global = errorBtns[14];
+      global.addEventListener('click', g => {
+        throw new newerror('something went wrong');
+      });
+      window.addEventListener('error', (message) => {
+        console.log(message);
+      })
+      class newerror extends Error {
+        constructor(message) {
+          super(message);
+          this.name = 'New Error';
+        }
+      }
+      }
+      if (window.onerror) {
+        TrackJS.track("Testing TrackJS!");
+        console.log("window.onerror caught an error");
+      }
     // Start your code here
     // You may move this JS to another file if you wish
-  </script>
+  </script>                          
 </body>
 
 </html>
